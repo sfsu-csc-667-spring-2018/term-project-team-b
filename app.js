@@ -1,13 +1,18 @@
-if(process.env.NODE_ENV === 'development') {
-    require("dotenv").config();
-}
+
 
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session');
+var bodyParser = require('body-parser');
 
+if(process.env.NODE_ENV === 'development') {
+    require("dotenv").config();
+}
+
+var passport = require('./auth');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var testsRouter = require('./routes/tests');
@@ -16,9 +21,30 @@ var testsRouter = require('./routes/tests');
 
 var app = express();
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true}));
+
+app.use(
+    session({
+        store: new (require('connect-pg-simple')(session))(),
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            secure:
+            process.env.ENVIRONMENT !== 'development' &&
+            process.env.ENVIRONMENT !== 'test',
+            maxAge: 7 * 24 * 60 * 60 * 1000
+        },
+        secret: process.env.COOKIE_SECRET
+    })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
