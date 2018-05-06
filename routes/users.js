@@ -25,7 +25,7 @@ router.post('/register', (request, response, next) => {
 
     User.create(email, password, name)
         .then(id => {
-            request.login({ email, password }, error => {
+            request.login({ email, password, name }, error => {
                 if (error) {
                     return next(error);
                 } else {
