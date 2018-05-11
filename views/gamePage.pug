@@ -1,0 +1,25 @@
+extends ./layouts/layout
+
+block content
+    .container(style='background-color:white')
+        .row
+            .col-lg-4
+                img(src='/img/player.png' width='72' height='100')
+                p player 2
+            .col-lg-4
+                img(src='/img/player.png' width='72' height='100')
+                p player 3
+            .col-lg-4
+                img(src='/img/player.png' width='72' height='100')
+                p player 4
+        .row(style='background-color:white; padding-top:20px')
+            .col-lg-8.col-lg-offset-4(class='discard')
+                img(src='/img/unoBack.png')
+                img(src='/img/wild.png')
+        .row()
+            .col-lg-8.col-lg-offset-4
+                button(style='background-color:blue') Draw Card
+                button(style='background-color:yellow') UNO
+                button(style='background-color:green') Play Card
+
+                        

@@ -6,3 +6,23 @@ body {
 a {
   color: #00B7FF;
 }
+
+p{
+  font-size: 20px;
+  color: red;
+}
+
+img{
+  max-width: 100%;
+  height: auto;
+}
+
+.discard img{
+  width: 150px;
+  height: 200px;
+}
+
+button{
+  border-radius:8px;
+  font-size:21px;
+}
