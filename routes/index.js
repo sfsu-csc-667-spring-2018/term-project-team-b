@@ -12,4 +12,8 @@ router.get('/lobby',(request, response) => {
     response.render('lobby', { user });
 });
 
+router.get('/gamePage', function(request, response, next) {
+    response.render('gamePage');
+});
+
 module.exports = router;
