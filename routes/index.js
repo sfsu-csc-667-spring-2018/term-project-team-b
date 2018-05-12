@@ -16,4 +16,8 @@ router.get('/gamePage', function(request, response, next) {
     response.render('gamePage');
 });
 
+router.get('/register', (request, response) => {
+    response.render('register');
+});
+
 module.exports = router;
