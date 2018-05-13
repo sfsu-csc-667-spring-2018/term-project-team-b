@@ -25,4 +25,10 @@ img{
 button{
   border-radius:8px;
   font-size:21px;
+  color:black;
+}
+
+.playerhand img{
+  width: 150px;
+  height: 200px;
 }
