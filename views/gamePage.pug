@@ -22,4 +22,7 @@ block content
                 button(style='background-color:yellow') UNO
                 button(style='background-color:green') Play Card
 
-                        
+        include chat.pug
+        script(src='/socket.io/socket.io.js')
+        script(src='javascripts/game.js' userid = userid, username = username, gameid = gameid)
+        script(src'/javascripts/bundle.js')
