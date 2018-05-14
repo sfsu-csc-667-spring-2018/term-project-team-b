@@ -12,14 +12,28 @@ block content
             .col-lg-4
                 img(src='/img/player.png' width='72' height='100')
                 p player 4
-        .row(style='background-color:white; padding-top:20px')
+        .row(style='background-color:white; padding-top:15px')
             .col-lg-8.col-lg-offset-4(class='discard')
                 img(src='/img/unoBack.png')
                 img(src='/img/wild.png')
         .row()
             .col-lg-8.col-lg-offset-4
-                button(style='background-color:blue') Draw Card
+                button(onclick="drawCard()" style='background-color:blue') Draw Card
                 button(style='background-color:yellow') UNO
                 button(style='background-color:green') Play Card
+        .row
+            button(onclick='play()') START GAME
+        .row( style='padding-top:20px')
+             .col-lg
+                .div(class='playerhand')
 
-                        
+
+
+
+
+    script(src='/cards.js')
+
+    include chat.pug
+    script(src='/socket.io/socket.io.js')
+    script(src='javascripts/game.js' userid = userid, username = username, gameid = gameid)
+    script(src'/javascripts/bundle.js')
