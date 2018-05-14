@@ -11,7 +11,7 @@ const find = email =>
 
 const serialize = (user, done) => {
     console.log('serialize', user);
-    done(null, user);
+    done(null, user.id);
 };
 
 const deserialize = (id, done) => {

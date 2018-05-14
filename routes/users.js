@@ -1,14 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('../auth');
+const passport = require('passport');
 const User = require('../db/users');
 
+//let User = require('../models/user.js');
 
-router.post('/login',passport.authenticate('local', {
-    successRedirect: '../lobby',
-    failureRedirect: '/'
-}));
 
+router.post('/login', function(req, res, next){
+    passport.authenticate('local', {
+        successRedirect:'/lobby',
+        failureRedirect:'/',
+        failureFlash: true
+    })(req, res, next);
+});
 
 router.get('/logout', (request, response) => {
     request.logout();
@@ -22,16 +26,12 @@ router.get('/register', (request, response) => {
 
 router.post('/register', (request, response, next) => {
     const { email, password, name } = request.body;
-    console.log('register', password);
+    console.log('register', name);
     User.create(email, password, name)
         .then(id => {
-            request.login({ email, password}, error => {
-                if (error) {
-                    return next(error);
-                } else {
-                    return response.redirect('../lobby');
-                }
-            });
+            console.log("User created log in: ", email);
+            request.flash('success','You are now registered and can log in');
+            response.redirect('/')
         })
         .catch(error => {
             console.log(error);
@@ -39,4 +39,4 @@ router.post('/register', (request, response, next) => {
         });
 });
 
-module.exports = router;
+module.exports = router;rts = router;
