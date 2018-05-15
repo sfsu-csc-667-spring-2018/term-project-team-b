@@ -12,11 +12,11 @@ module.exports = {
                 allowNull: false
             },
             owner: {
-                type: Sequelize.BOOL,
+                type: Sequelize.BOOLEAN,
                 allowNull: false
             },
             dealer: {
-                type: Sequelize.BOOL,
+                type: Sequelize.BOOLEAN,
                 allowNull: false
             }
         });

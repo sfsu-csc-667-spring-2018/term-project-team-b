@@ -10,12 +10,10 @@ module.exports = {
             },
             playerCount: {
                 type: Sequelize.INTEGER,
-                allowNull: false,
                 defaultValue: 1
             },
             inGame: {
-                type: Sequelize.BOOL,
-                allowNull: false,
+                type: Sequelize.BOOLEAN,
                 defaultValue: false
             },
             chatID: {
