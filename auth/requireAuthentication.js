@@ -1,7 +1,10 @@
-const requireAuthentication = (request, response, next) => {
+function requireAuthentication(request, response, next){
     if (request.isAuthenticated()) {
+        console.log("Authenticated!");
         return next();
-    } else {
+    }
+    else {
+        console.log("not Authenticated!");
         response.redirect('/');
     }
 };

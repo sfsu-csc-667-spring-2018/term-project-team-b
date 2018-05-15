@@ -4,18 +4,17 @@ const bcrypt = require('bcrypt');
 const User = require('../db/users');
 
 const lookup = (email, password, done) => {
-    User.find(email)
-        .then(({ id, hash, email }) => {
-            if (bcrypt.compareSync(password, hash)) {
-                done(null, { id, email });
-            } else {
-                done('Please verify your email and password', false);
-            }
-        })
-        .catch(error => {
-            console.log(error);
+    console.log("lookup");
+    User.find(email, ( user )=> {
+        //console.log("found");
+        if (bcrypt.compareSync(password, user.hash)){
+            console.log('found player id :', user.id);
+            done(null , user );
+        }
+        else {
             done('Please verify your email and password', false);
-        });
+        }
+    });
 };
 
 const strategy = new LocalStrategy(

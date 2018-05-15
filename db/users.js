@@ -2,22 +2,39 @@ const bcrypt = require('bcrypt');
 const db = require('./index');
 
 const CREATE_QUERY =
-    'INSERT INTO users (email, hash, name) VALUES (${email}, ${hash}, ${name}) RETURNING id, email';
-const create = (email, password, name) =>
-    bcrypt.hash(password, 10).then(hash => db.one(CREATE_QUERY, { email, hash, name }));
+    'INSERT INTO users (email, hash, name) VALUES (${email}, ${hash}, ${name}) RETURNING id';
+const create = (email, password, name, cb) =>{
+    bcrypt.hash(password, 10)
+        .then(hash => {
+            db
+                .one(CREATE_QUERY, {email, hash, name})
+                .then(id =>{
+                    console.log(id);
+                    cb(id.id);
+                })
+        })
+};
 
-const find = email =>
-    db.one('SELECT * FROM users WHERE email=${email}', { email });
-
+const find = (email,userID) => {
+    db.one('SELECT * FROM users WHERE email=${email}', {email})
+        .then(user =>
+        {
+            console.log('found id : ',user);
+            userID(user);
+        })
+        .catch(error => console.log('error!', error));
+};
 const serialize = (user, done) => {
     console.log('serialize', user);
-    done(null, user);
+    done(null, user.id);
 };
 
 const deserialize = (id, done) => {
     db
-        .one('SELECT * FROM users WHERE id=${id}', { id })
-        .then(({ id, email }) => done(null, { id, email }))
+        .one('SELECT * FROM users WHERE id=${id}', {id})
+        .then(user => {
+            console.log("deser :", user);
+            done(null, user);})
         .catch(error => done(error));
 };
 
