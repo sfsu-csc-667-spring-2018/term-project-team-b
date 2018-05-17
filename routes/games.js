@@ -9,7 +9,6 @@ const requireAuthentication = require('../auth/requireAuthentication');
 
 //createNewGameRoom
 router.get('/create',requireAuthentication, function(request, response, next){
-    Game.create(request.user.id);
     response.render('game');
 });
 //start game

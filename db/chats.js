@@ -15,7 +15,7 @@ const DESTROY_CHAT =
     'DELETE FROM chats WHERE id = ${chatID}';
 const destroy = (chatID) => {
     db
-        .one(DESTROY_CHAT, {chatID})
+        .none(DESTROY_CHAT, {chatID})
         .catch(error => console.log('error!',error));
 };
 
@@ -36,7 +36,7 @@ const DESTROY_MESSAGE =
     'DELETE FROM messages WHERE id = ${messageID}';
 const destroyMessage = (messageID) => {
     db
-        .one(DESTROY_MESSAGE, {messageID})
+        .none(DESTROY_MESSAGE, {messageID})
         .catch(error => console.log('error!',error));
 };
 //ADD MESSAGE TO CHAT
@@ -52,12 +52,13 @@ const DELETE_CHAT_MESSAGES =
     'DELETE FROM messages-chats WHERE chatID = ${chatID}';
 const deleteAllMessages = (chatID) =>{
     db
-        .one(DELETE_CHAT_MESSAGES, {chatID})
+        .none(DELETE_CHAT_MESSAGES, {chatID})
 };
 module.exports = {
     create,
     destroy,
     createMessage,
     destroyMessage,
-    addMessage
+    addMessage,
+    deleteAllMessages
 };

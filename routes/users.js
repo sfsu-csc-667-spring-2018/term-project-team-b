@@ -32,13 +32,14 @@ router.post('/register', (request, response, next) => {
     User.create(email, password, name, (id) => {
         console.log("User created log in: ", email);
         request.flash('success','You are now registered and can log in');
-        request.login({email,password}, error => {
+        /*request.login({email,password}, error => {
                 if (error) {
                     return next(error);
                 } else {
                     return response.redirect('/lobby');
                 }
-            });
+            });*/
+        response.redirect('../');
     })
 });
 

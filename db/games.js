@@ -25,7 +25,7 @@ const REMOVE_PLAYER =
     'DELETE FROM games-users WHERE playerID = ${playerID}';
 
 const removePlayer = (playerID) =>{
-    db.one(REMOVE_PLAYER,{playerID});
+    db.none(REMOVE_PLAYER,{playerID});
 };
 
 //get owner
@@ -51,7 +51,7 @@ const CHANGE_DEALER =
     'UPDATE games_users SET dealer = ${isDealer} WHERE gameID = ${gameID} AND playerID = ${playerID}';
 const changeDealer = (isDealer,gameID, playerID) =>{
     db
-        .one(CHANGE_DEALER, {isDealer,gameID,playerID});
+        .none(CHANGE_DEALER, {isDealer,gameID,playerID});
 };
 
 //get draw deck

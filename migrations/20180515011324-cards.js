@@ -9,7 +9,7 @@ module.exports = {
                 autoIncrement: true
             },
             value: {
-                type: Sequelize.INTEGER,
+                type: Sequelize.STRING,
                 allowNull: false
             }
         });
