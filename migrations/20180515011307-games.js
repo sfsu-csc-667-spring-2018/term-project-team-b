@@ -21,7 +21,7 @@ module.exports = {
                 allowNull: false,
                 unique: true,
             },
-            deckID: {
+            drawID: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 unique: true,
