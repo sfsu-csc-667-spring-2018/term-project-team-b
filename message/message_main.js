@@ -7,20 +7,20 @@ const socket = io()
 const appendMessage = message => {
     $('.messages').append(message)
     $('.time.timeago').timeago()
-}
+};
 
 const messageElement = ({timestamp, user, message}) =>
     $('<div>', {class: 'message'})
     .text(message)
     .prepend(timestampElement(timestamp), userElement(user))
 
-cnost timestampElement = time => {
+const timestampElement = time => {
     const element = $('<time>', {
         class = 'timeago',
         datetime: moment(time).format()
     }).text(moment(time).format('hh:mm:ss'))
     return element[0]
-}
+};
 
 const userElement = userName =>
     $('<span>', {class: 'user'}).text(userName)[0]
@@ -31,7 +31,7 @@ const userJoined = data =>
 const initializeSocket = () => {
     socket.on(USER_JOINED, userJoined)
     socket.on(MESSAGE_SEND, messageReceived )
-}
+};
 
 $(document).ready(() => {
     initializeSocket()
@@ -43,4 +43,4 @@ $(document).ready(() => {
         socket.emit(MESSAGE_SEND, {user, timestamp: Date.now(), message})
 
     })
-})
+});

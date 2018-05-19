@@ -17,7 +17,7 @@ const init = (app, server) => {
 
         socket.on('disconnect', data => {
             console.log('client disconnected')
-        })
+        });
 
         socket.on(USER_JOINED, data => io.emit(USER_JOINED, data ))
         socket.on(MESSAGE_SEND, data => io.emit(MESSAGE_SEND, data))
@@ -30,7 +30,7 @@ const init = (app, server) => {
                 if(index == username) {
                     found = true;
                 }
-            })
+            });
 
             if(found == false) {
                 socketPlayers.push(username);
@@ -38,7 +38,7 @@ const init = (app, server) => {
 
             socketPlayers.forEach(function(index) {
                 console.log('SOCKET PLAYERS: ' + index);
-            })
+            });
 
             io.emit('update_players', socketPlayers);
 
@@ -50,7 +50,7 @@ const init = (app, server) => {
                         socket.emit('init_topcard', topcard);
                     })
             })
-        })
+        });
 
         socket.on('draw card', function(userData) {
             console.log(userData.username + " drew a card")
@@ -67,7 +67,7 @@ const init = (app, server) => {
                 .catch(err => {
                     console.log(err)
                 })
-        })
+        });
         socket.on('play_card', function(userData) {
             GameCards.playCard(gameid, userData.userid, INSERT_CARD_ID).then(card => {
                 console.log('Player card id: ', card.card_id)
@@ -81,7 +81,7 @@ const init = (app, server) => {
                 .catch(err => {
                     console.log(err)
                 })
-        })
+        });
         socket.on('reset', function(gameData) {
             var numCardsInDeck
             GameCards.getNumCardsInDeck(gameData.gameid).then(results => {
@@ -92,23 +92,23 @@ const init = (app, server) => {
                     console.log('Discard pile reshuffled into deck')
                 }
             })
-        })
+        });
         socket.on('update_gameData', function(gameData) {
             console.log('updating game data..');
             console.log(gameData.currentPlayerTurn);
 
             socket.broadcast.emit('update_gameData2', gameData);
-        })
+        });
 
         socket.on('end_game', function(gameData) {
             Games.delete(gameData.gameid).then(() => {
                 console.log('Game id: ' + gameData.gameid + ' has been deleted')
             })
-        })
+        });
         socket.on('uno called', function(msg) {
             socket.emit('uno_msg', msg);
         })
     })
-}
+};
 
-module.exports = {init}
+module.exports = {init};

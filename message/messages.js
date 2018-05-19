@@ -1,7 +1,7 @@
 const appendMessage = message => {
     $('.messages').append(message)
     $('.time.timeago').timeago()
-}
+};
 
 const messageElement = ({timestamp, user, message}) =>
     $('<div>', { class: 'message'})
@@ -14,7 +14,7 @@ const timestampElement = time => {
         datetime: moment(time).format()
     }).text(moment(time).format('hh:mm:ss'))
     return element[0]
-}
+};
 
 const userElement = userName =>
     $('<span>', {class: 'user'}).text(userName)[0]
