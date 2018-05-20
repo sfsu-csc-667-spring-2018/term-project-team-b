@@ -32,10 +32,11 @@ app.use(cookieParser());
 
 app.use(
     session({
+        store: new (require('connect-pg-simple')(session))(),
         secret: process.env.COOKIE_SECRET,
         saveUninitialized: false,
         resave: false,
-        store: new (require('connect-pg-simple')(session))(),
+
         cookie: {
             maxAge: 24 * 60 * 60 * 1000
         }
