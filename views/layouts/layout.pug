@@ -18,8 +18,9 @@ html(lang='en')
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
         link(rel='stylesheet', href='/stylesheets/style.css')
+        script(src="/socket.io/socket.io.js")
     body
-        nav.navbar.navbar-inverse.navbar-fixed-top
+        nav.navbar.navbar-inverse.navbar-fixed-top(style="background-color:#21467c;")
             .container
                 .navbar-header
                     button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')

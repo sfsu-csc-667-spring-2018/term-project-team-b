@@ -8,3 +8,7 @@ block content
                     input.form-control(type='text', placeholder='Message...')
                     span.input-group-btn
                         button.btn.btn-default(type='button') Send
+
+    //Socket end for testing, other end in app.js
+    script.
+        var socket = io.connect();
