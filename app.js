@@ -7,6 +7,7 @@ const session = require('express-session');
 const expressValidator = require('express-validator');
 const flash  = require('connect-flash');
 const bodyParser = require('body-parser');
+const favicon = require('serve-favicon');
 
 if(process.env.NODE_ENV === 'development') {
     require("dotenv").config();
@@ -22,6 +23,8 @@ const testsRouter = require('./routes/tests');
 
 
 const app = express();
+
+app.use(favicon(path.join(__dirname, 'public/images/', 'favicon.png')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
