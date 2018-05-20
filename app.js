@@ -7,6 +7,7 @@ const session = require('express-session');
 const expressValidator = require('express-validator');
 const flash  = require('connect-flash');
 const bodyParser = require('body-parser');
+const favicon = require('serve-favicon');
 
 if(process.env.NODE_ENV === 'development') {
     require("dotenv").config();
@@ -23,6 +24,8 @@ const testsRouter = require('./routes/tests');
 
 const app = express();
 
+app.use(favicon(path.join(__dirname, 'public/images/', 'favicon.png')));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(cookieParser());
@@ -34,10 +37,7 @@ app.use(
         resave: false,
         store: new (require('connect-pg-simple')(session))(),
         cookie: {
-            secure:
-            process.env.ENVIRONMENT !== 'development' &&
-            process.env.ENVIRONMENT !== 'test',
-            maxAge: 7 * 24 * 60 * 60 * 1000
+            maxAge: 24 * 60 * 60 * 1000
         }
 
     })
