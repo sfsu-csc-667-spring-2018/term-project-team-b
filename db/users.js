@@ -32,6 +32,7 @@ const deserialize = (id, done) => {
     db
         .one('SELECT * FROM users WHERE id=${id}', {id})
         .then(user => {
+            console.log("deserialize : ", user);
             done(null, user);})
         .catch(error => done(error));
 };

@@ -34,10 +34,7 @@ app.use(
         resave: false,
         store: new (require('connect-pg-simple')(session))(),
         cookie: {
-            secure:
-            process.env.ENVIRONMENT !== 'development' &&
-            process.env.ENVIRONMENT !== 'test',
-            maxAge: 7 * 24 * 60 * 60 * 1000
+            maxAge: 24 * 60 * 60 * 1000
         }
 
     })

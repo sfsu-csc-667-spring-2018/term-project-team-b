@@ -10,8 +10,7 @@ const requireAuthentication = require('../auth/requireAuthentication');
 
 router.post('/login', passport.authenticate('local', {
         successRedirect:'../lobby',
-        failureRedirect:'/',
-        failureFlash: true
+        failureRedirect:'/'
     })
 );
 
