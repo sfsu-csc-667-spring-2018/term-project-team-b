@@ -21,9 +21,15 @@ const gamesRouter = require('./routes/games');
 const testsRouter = require('./routes/tests');
 
 
-
+//start express app
 const app = express();
 
+var server = require('http').createServer(app);
+var io = require('socket.io').listen(server);
+server.listen(app.get('port'));
+users = [];
+connections = [];
+console.log("server running");
 app.use(favicon(path.join(__dirname, 'public/images/', 'favicon.png')));
 
 app.use(bodyParser.json());
@@ -107,6 +113,13 @@ app.use(function(err, req, res, next) {
     res.render('error');
 });
 
+//sockets for testing. does not work. Other endpoint in chat.pug
+io.sockets.on('connection', function(socket){
+    connections.push(socket);
+    console.log('connected: %s sockets connected', connections.length);
 
+    connections.splice(connections.indexOf(socket), 1);
+    console.log("disconnected");
+});
 
 module.exports = app;
