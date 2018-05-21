@@ -19,4 +19,8 @@ router.get('/register', (request, response) => {
     response.render('register');
 });
 
+router.get('/game', (request, response) => {
+    response.render('game');
+});
+
 module.exports = router;
