@@ -55,7 +55,7 @@ app.use(passport.session());
 //express messages middleware for flash messages
 app.use(require('connect-flash')());
 app.use(function (request,response,next) {
-    response.locals.messages = require('express-messages')(request,response)
+    response.locals.messages = require('express-messages')(request,response);
     next();
 });
 
