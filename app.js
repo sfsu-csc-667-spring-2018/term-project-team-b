@@ -7,6 +7,7 @@ const session = require('express-session');
 const expressValidator = require('express-validator');
 const flash  = require('connect-flash');
 const bodyParser = require('body-parser');
+const favicon = require('serve-favicon');
 
 if(process.env.NODE_ENV === 'development') {
     require("dotenv").config();
@@ -20,8 +21,16 @@ const gamesRouter = require('./routes/games');
 const testsRouter = require('./routes/tests');
 
 
-
+//start express app
 const app = express();
+
+var server = require('http').createServer(app);
+var io = require('socket.io').listen(server);
+server.listen(app.get('port'));
+users = [];
+connections = [];
+console.log("server running");
+app.use(favicon(path.join(__dirname, 'public/images/', 'favicon.png')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
@@ -34,10 +43,7 @@ app.use(
         resave: false,
         store: new (require('connect-pg-simple')(session))(),
         cookie: {
-            secure:
-            process.env.ENVIRONMENT !== 'development' &&
-            process.env.ENVIRONMENT !== 'test',
-            maxAge: 7 * 24 * 60 * 60 * 1000
+            maxAge: 24 * 60 * 60 * 1000
         }
 
     })
@@ -106,6 +112,13 @@ app.use(function(err, req, res, next) {
     res.render('error');
 });
 
+//sockets for testing. does not work. Other endpoint in chat.pug
+io.sockets.on('connection', function(socket){
+    connections.push(socket);
+    console.log('connected: %s sockets connected', connections.length);
 
+    connections.splice(connections.indexOf(socket), 1);
+    console.log("disconnected");
+});
 
 module.exports = app;

@@ -12,9 +12,11 @@ const lookup = (email, password, done) => {
             done(null , user );
         }
         else {
-            done('Please verify your email and password', false);
+            console.log("No match");
+            done(null,null);
         }
     });
+    //done('Please verify your email and password', false);
 };
 
 const strategy = new LocalStrategy(

@@ -3,11 +3,11 @@ html(lang='en')
     head
         meta(charset='utf-8')
         meta(http-equiv='X-UA-Compatible', content='IE=edge')
-        meta(name='viewport', content='width=device-width, initial-scale=1')
+
 
         meta(name='description', content='Play UNO Online!')
         meta(name='author', content='team-b')
-        link(rel='icon', href='/images/favicon.ico')
+        link(rel='icon', href='/images/favicon.png')
 
         title UNO Online
 
@@ -18,8 +18,9 @@ html(lang='en')
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
         link(rel='stylesheet', href='/stylesheets/style.css')
+        script(src="/socket.io/socket.io.js")
     body
-        nav.navbar.navbar-inverse.navbar-fixed-top
+        nav.navbar.navbar-inverse.navbar-fixed-top(style="background-color:#21467c;")
             .container
                 .navbar-header
                     button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
@@ -35,7 +36,7 @@ html(lang='en')
                         li
                             a(href='register') Register
                         li
-                            a(href='gamePage') Game Page
+                            a(href='game') Game Page
                 // /.nav-collapse
         .container
             block content
