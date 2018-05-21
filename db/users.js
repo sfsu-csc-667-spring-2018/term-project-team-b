@@ -8,9 +8,9 @@ const create = (email, password, name, cb) =>{
         .then(hash => {
             db
                 .one(CREATE_QUERY, {email, hash, name})
-                .then(id =>{
-                    console.log(id);
-                    cb(id.id);
+                .then(user =>{
+                    console.log(user);
+                    cb(user.id);
                 })
         })
 };
@@ -19,7 +19,6 @@ const find = (email,userID) => {
     db.one('SELECT * FROM users WHERE email=${email}', {email})
         .then(user =>
         {
-            console.log('found id : ',user);
             userID(user);
         })
         .catch(error => console.log('error!', error));
@@ -33,7 +32,7 @@ const deserialize = (id, done) => {
     db
         .one('SELECT * FROM users WHERE id=${id}', {id})
         .then(user => {
-            console.log("deser :", user);
+            console.log("deserialize : ", user);
             done(null, user);})
         .catch(error => done(error));
 };

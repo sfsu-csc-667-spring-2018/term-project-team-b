@@ -1,42 +1,94 @@
 const db = require('./index');
-const decks = require('./decks');
-const chats = require('./chats');
-const users = require('./users');
 
 
-//SETUP NEW GAME CREATE ENTITIES
+
 //NEW GAME
-const CREATE_QUERY =
-    'INSERT INTO games (chat, draw, discard) VALUES (${chat},${draw},${discard}) RETURNING id';
-const create = (userID) => {
-    //create chat
-    const newChat = chats.create();
-    //create deck draw pile
-    const newDraw = decks.create();
-    //create deck discard pile
-    const newDiscard = decks.create();
-    //greate game
-    const newGame = db.one(CREATE_QUERY, {newChat,newDraw,newDiscard} );
-    //set owner
-    addOwner(userID,newGame, true, true);
-
-    console.log("Game Created : ", newGame);
+const CREATE_GAME =
+    'INSERT INTO games (chatID,drawID, discardID) VALUES (${chat},${draw},${discard}) RETURNING id';
+const create = (chat,draw,discard,cb) => {
+    db
+        .one(CREATE_GAME,{chat,draw,discard})
+        .then(gameID =>
+            cd(gameID.id));
 };
 
-//SET OWNER ->games-users
-const ADD_USER =
-    'INSERT INTO games-users (user,game,isOwner,isDealer) VALUES (${owner},${game},${isOwner},${isDealer}) RETURNING playerID, gameID';
+//add player
+const ADD_PLAYER =
+    'INSERT INTO games-users (gameID,playerID,owner,dealer) VALUES (${gameID},${playerID},${owner},${dealer}) RETURNING playerID, gameID';
 
-const addOwner = () => db.one(CREATE_QUERY, {} );
+const addPlayer = (userID,gameID,isOwner,isDealer) =>{
+    db.one(ADD_USER, {userID,gameID,isOwner,isDealer} );
+};
 
+//remove player
+const REMOVE_PLAYER =
+    'DELETE FROM games-users WHERE playerID = ${playerID}';
 
+const removePlayer = (playerID) =>{
+    db.none(REMOVE_PLAYER,{playerID});
+};
 
-const GET_OWNER_QUERY =
-    'SELECT users.email FROM games, users WHERE games.id=${id} AND users.id=games.created_by';
-const getOwner = id => db.one(GET_OWNER_QUERY, { id });
+//get owner
+const GET_OWNER =
+    'SELECT playerID FROM games_users WHERE gameID=${gameID} AND owner = true';
+const getOwner = (gameID,cb) =>
+    db
+        .one(GET_OWNER, { gameID })
+        .then(playerID =>
+            cb(playerID));
+
+//get dealer
+const GET_DEALER =
+    'SELECT playerID FROM games_users WHERE gameID=${gameID} AND dealer = true';
+const getDealer= (gameID,cb) =>
+    db
+        .one(GET_DEALER, { gameID })
+        .then(playerID =>
+            cb(playerID));
+
+//change Dealer
+const CHANGE_DEALER =
+    'UPDATE games_users SET dealer = ${isDealer} WHERE gameID = ${gameID} AND playerID = ${playerID}';
+const changeDealer = (isDealer,gameID, playerID) =>{
+    db
+        .none(CHANGE_DEALER, {isDealer,gameID,playerID});
+};
+
+//get draw deck
+const GET_DRAW =
+    'SELECT drawID FROM games WHERE gameID=${gameID}';
+const getDrawDeck= (gameID,cb) =>
+    db
+        .one(GET_DRAW, { gameID })
+        .then(drawID =>
+            cb(drawID));
+
+//get discard deck
+const GET_DISCARD =
+    'SELECT discardID FROM games WHERE gameID=${gameID}';
+const getDiscardDeck= (gameID,cb) =>
+    db
+        .one(GET_DISCARD, { gameID })
+        .then(playerID =>
+            cb(playerID));
+
+//get chat
+const GET_CHAT =
+    'SELECT chatID FROM games WHERE gameID=${gameID}';
+const getChat= (gameID,cb) =>
+    db
+        .one(GET_CHAT, { gameID })
+        .then(chatID =>
+            cb(chatID));
 
 module.exports = {
     create,
-    addOwner,
-    getOwner
+    addPlayer,
+    removePlayer,
+    getOwner,
+    getDealer,
+    changeDealer,
+    getDrawDeck,
+    getDiscardDeck,
+    getChat
 };

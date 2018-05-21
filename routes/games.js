@@ -8,9 +8,8 @@ const Chat = require('../db/chats');
 const requireAuthentication = require('../auth/requireAuthentication');
 
 //createNewGameRoom
-router.post('/',requireAuthentication, function(request, response, next){
-   const userID = request.session.passport.user.id;
-    Game.create(userID);
+router.get('/create',requireAuthentication, function(request, response, next){
+    response.render('game');
 });
 //start game
 router.get('/:gameID', requireAuthentication, function(request, response) {
