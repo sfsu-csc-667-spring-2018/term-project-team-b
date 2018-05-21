@@ -19,7 +19,7 @@ router.get('/register', (request, response) => {
     response.render('register');
 });
 
-router.get('/game', (request, response) => {
+router.get('/game', requireAuthentication ,(request, response) => {
     response.render('game');
 });
 

@@ -24,7 +24,7 @@ const find = (email,userID) => {
         .catch(error => console.log('error!', error));
 };
 const serialize = (user, done) => {
-    console.log('serialize', user);
+    console.log('serialize', user.id," : ", user.email);
     done(null, user.id);
 };
 
@@ -32,7 +32,7 @@ const deserialize = (id, done) => {
     db
         .one('SELECT * FROM users WHERE id=${id}', {id})
         .then(user => {
-            console.log("deserialize : ", user);
+            console.log("deserialize : ", user.id," : ", user.email);
             done(null, user);})
         .catch(error => done(error));
 };
